@@ -1,0 +1,295 @@
+* {
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  background-color: white;
+  max-width: 100%;
+  overflow-x: hidden;
+  height:auto!important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  vertical-align: middle;
+}
+
+h1 {
+  color: black;
+  font-size: 4em;
+}
+
+div.left {
+  margin-left: 1%;
+}
+
+div.right {
+  position: absolute;
+  right: 1%;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+div.text p {
+  text-indent: 1em;
+}
+
+div.text {
+  width: 45%;
+}
+
+.page {
+  width: 100%;
+  min-height: 92vh;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.moving_img {
+  position: absolute;
+  height: 128px;
+  width: 128px;
+}
+
+#move2 {
+  margin-top: 132px;
+}
+
+img.right {
+  position: absolute;
+  margin-top: -10vh;
+  right: 10%;
+  width: 30vw;
+  height: 30vw;
+}
+
+.waytoosmall img.unimportant {
+  display: none
+}
+
+.waytoosmall img.right {
+  position: relative;
+  display: block;
+  margin: 5px auto;
+  width: 90vw;
+  height: 90vw;
+  right: auto;
+}
+
+h1.left {
+  position: relative;
+  margin-left: 5%;
+}
+
+.waytoosmall div.left, .waytoosmall div.right {
+  position: relative;
+  width: 90%;
+  margin: auto;
+}
+
+.waytoosmall h1.left, .waytoosmall h1.right {
+  text-align: center;
+  margin: auto;
+  width: 90%;
+  overflow-x: wrap;
+  font-size: 3em;
+}
+
+#navbar {
+  display: inline-block;
+  background-color: #472363;
+  width: 100%;
+  height: 8vh;
+  min-height: 64px;
+  min-width: 64px;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar_option_container .navbar_menu {
+  display: none;
+  z-index: 100;
+  /* top */
+  background-color: #472363;
+  position: absolute;
+  min-width: 128px;
+  margin: auto;
+}
+
+.navbar_option_container:hover > .navbar_menu {
+  display: block;
+  flex-direction: column;
+}
+
+.navbar_menu .navbar_option_container .navbar_menu {
+  right: 100%;
+}
+
+.navbar_menu .navbar_option_container:hover > .navbar_menu {
+  display: inline-block;
+  min-width: 128px;
+}
+
+#options > .navbar_option_container > .option_text_collapsed,
+#options_toosmall .option_text_navbar {
+  display: none;
+}
+
+#options_toosmall .option_text_collapsed,
+#options > .navbar_option_container > .option_text_navbar {
+  display: block;
+}
+
+#options_end .navbar_menu p:after, 
+#options_end .navbar_menu p:hover:after {
+  content: '' !important;
+}
+
+#options_end .navbar_menu p:before  {
+  content: "\ab";
+  opacity: 0;
+}
+
+p:before, p:after {
+  text-align: center;
+}
+
+#options_end .navbar_menu p:hover:before  {
+  color: #fff;
+  opacity: 1;
+}
+
+.navbar_option_container:hover > .navbar_menu > p,
+.navbar_option_container>p {
+  text-align: center;
+}
+
+.navbar_option_container:hover > .navbar_menu > p:hover:after {
+  content: "\bb";
+  color: #fff;
+}
+
+.navbar_option_container > .navbar_menu > p:hover,
+.navbar_option_container > p:hover,
+#options > p:hover {
+  color: #c79c1d;
+  transition: color .05s linear;
+}
+
+#logo_container {
+  transition: width 0.5s ease-in-out;
+  float: left;
+  width: 8vh;
+  min-height: 64px;
+  min-width: 64px;
+  height: 8vh;
+  overflow: visible;
+}
+
+#options {
+  transition: all 0.5s ease-in-out;
+  margin-left: 8vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 8vh;
+  min-height: 64px;
+}
+
+#options>* {
+  display: inline-block;
+  color: #fff;
+  vertical-align: middle;
+  overflow: hidden;
+  min-width: 128px;
+  text-align: center;
+}
+
+#options>p:hover:after {
+  opacity: 1;
+  color: #fff;
+}
+
+#options>p:after {
+  content: '\bb';
+  opacity: 0;
+}
+
+#navbar #logo_container img {
+  display: inline-block;
+}
+
+#navbar_logo {
+  height: 8vh;
+  width: 8vh;
+  min-height: 64px;
+  min-width: 64px;
+}
+
+
+@keyframes moving-notes {
+  0% {
+    background: url("https://i.imgur.com/Wl6E9rE.png") 0 0; /* link to my img */
+    background-size: auto 5vh;
+  }
+
+  100% {
+    background: url("https://i.imgur.com/Wl6E9rE.png") -1232px 0;
+    background-size: auto 5vh;
+  }
+}
+
+#content {
+  width: 100%;
+  height: 92vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: absolute;
+}
+
+#marker {
+  position: fixed;
+}
+
+.notes {
+  position: relative;
+  top: 0;
+  left: 100%;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5vh;
+  margin: 5% 0;
+  background-repeat: repeat-x;
+  background: url("https://i.imgur.com/Wl6E9rE.png") 0 0;
+  background-size: auto 5vh;
+}
+
+.notes.moving {
+  animation: moving-notes 100s linear infinite;
+}
+
+.waytoosmall .notes.moving {
+  animation: none; /* they are probably on mobile, so let's not eat all of their ram */
+}
+
+a {
+  color: #fff;
+}
+
+a:hover,
+a:visited:hover {
+  color: #c79c1d;
+}
+
+a:visited {
+  color: #fff;
+}

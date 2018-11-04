@@ -166,9 +166,9 @@ img.right {
   #body img.right {
     position: relative;
     display: block;
-    margin: 5px auto;
-    width: 90vw;
-    height: 90vw;
+    margin: auto auto;
+    width: 66vw;
+    height: 66vw;
     right: auto;
   }
 

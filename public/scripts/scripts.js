@@ -1,29 +1,29 @@
-var optionsShown = 4;
 var totalOptions = 4;
+var showingOptions = true;
 
 var movingElements = [
   {
-    element: "#notes",
-    startX: 0,
-    endX: 1,
+    selector: ".notes",
+    start: 0,
+    end: 1,
     from: 'left',
     startMove: .33,
     endMove: .66,
     classes: ['notes', 'notes moving']
   },
   {
-    element: "#move1",
-    startX: 0.8,
-    endX: 1,
+    selector: "#move1",
+    start: 0.8,
+    end: 1,
     from: 'right',
     startMove: .66,
     endMove: 1,
     classes: /* don't mind me, I'm just an */ ['unimportant moving_img', 'unimportant moving_img']
   },
   {
-    element: "#move2",
-    startX: 0.75,
-    endX: 1,
+    selector: "#move2",
+    start: 0.75,
+    end: 1,
     from: 'right',
     startMove: .66,
     endMove: 1,
@@ -40,28 +40,7 @@ window.onload = function () {
       navbar.classList = "navbar";
     }
 
-    var height = window.innerHeight;
-    var width = window.innerWidth;
-    movingElements.forEach(function(data) {
-      var startMove = data.startMove * height;
-      var endMove = data.endMove * height;
-      var startX = data.startX * width;
-      var endX = data.endX * width;
-      var element = document.querySelector(data.element);
-      var pos = element.getBoundingClientRect()["top"];
-      if (pos <= endMove && pos >= startMove) {
-        element.style[data.from] = startX + (pos - startMove) * ((endX - startX) / (endMove - startMove)) + "px";
-        element.classList = data.classes[0];
-      } else {
-        if (pos >= endMove) {
-          element.style[data.from] = endX + 'px';
-          element.classList = data.classes[0];
-        } else {
-          element.style[data.from] = startX + 'px';
-          element.classList = data.classes[1];
-        }
-      }
-    });
+    moveMovingElements();
   }
 
   window.onresize = function () {
@@ -75,43 +54,66 @@ window.onload = function () {
       }
     } else {
       if (document.body.classList[0]) {
-        var height = window.innerHeight;
-        var width = window.innerWidth;
-        movingElements.forEach(function(data) {
-          var startMove = data.startMove * height;
-          var endMove = data.endMove * height;
-          var startX = data.startX * width;
-          var endX = data.endX * width;
-          var element = document.querySelector(data.element);
-          var pos = element.getBoundingClientRect()["top"];
-          if (pos <= endMove && pos >= startMove) {
-            element.style[data.from] = startX + (pos - startMove) * ((endX - startX) / (endMove - startMove)) + "px";
-            element.classList = data.classes[0];
-          } else {
-            if (pos >= endMove) {
-              element.style[data.from] = endX + 'px';
-              element.classList = data.classes[0];
-            } else {
-              element.style[data.from] = startX + 'px';
-              element.classList = data.classes[1];
-            }
-          }
-        });
+        moveMovingElements();
       }
       document.body.classList = "";
       document.getElementById("content").onscroll(); // reset navbar classes
     }
-    if (1 + Math.min(totalOptions, Math.max(Math.floor(.7*width/128) - 1, 0)) != optionsShown) {
-      optionsShown = 1 + Math.min(totalOptions, Math.max(Math.floor(.7*width/128) - 1, 0));
-      for (var i = 1; i <= totalOptions; i++) {
-        document.getElementById("options").insertBefore(document.getElementById("option"+i), document.getElementById("options_end"));
-      }
-      if (optionsShown != totalOptions) {
-        for (var i = optionsShown; i <= totalOptions; i++) {
+    if (.7 * width < (totalOptions + 1) * 128) {
+      if (showingOptions) {
+        showingOptions = false;
+        for (var i = 1; i <= totalOptions; i++) {
           document.getElementById("options_toosmall").appendChild(document.getElementById("option"+i));
+        }
+      }
+    } else {
+      if (!showingOptions) {
+        showingOptions = true;
+        for (var i = 1; i <= totalOptions; i++) {
+          document.getElementById("options").insertBefore(document.getElementById("option"+i), document.getElementById("options_end"));
         }
       }
     }
   }
   window.onresize();
+}
+
+function toggleMenu() {
+  if (!showingOptions && Array.from(document.getElementById("options_end").classList).indexOf("open") == -1) {
+    document.getElementById("options_end").classList = "navbar_option_container open";
+    document.body.style.marginRight = "15em";
+    document.body.style.marginLeft = "-15em";
+  } else {
+    document.getElementById("options_end").classList = "navbar_option_container";
+    document.body.style.marginRight = "0em";
+    document.body.style.marginLeft = "0em";
+  }
+}
+
+function moveMovingElements() {
+  var height = window.innerHeight;
+  var width = window.innerWidth;
+  movingElements.forEach(function(data) {
+    var startMove = data.startMove * height;
+    var endMove = data.endMove * height;
+    var start = data.start * width;
+    var end = data.end * width;
+    var elements = document.querySelectorAll(data.selector);
+    for (var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+      var pos = element.getBoundingClientRect()["top"];
+      if (pos <= endMove && pos >= startMove) {
+        element.style[data.from] = start + (pos - startMove) * ((end - start) / (endMove - startMove)) + "px";
+        element.classList = data.classes[0];
+      } else {
+        if (pos >= endMove) {
+          element.style[data.from] = end + 'px';
+          element.classList = data.classes[0];
+        } else {
+          element.style[data.from] = start + 'px';
+          element.classList = data.classes[1];
+        }
+      }
+    }
+  });
 }

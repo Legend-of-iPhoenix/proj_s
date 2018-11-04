@@ -6,13 +6,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <script type="text/javascript" src="scripts/scripts.js"></script>
 </head>
-<body>
+<body id="body"> <!-- we use the #body selector in the CSS to bump up specificity when we need to -->
   <nav id="navbar">
     <div id="logo_container">
       <img alt="icon" src="https://dummyimage.com/64x64" class="logo" id="navbar_logo">
       <!--<img alt="logo" src="https://dummyimage.com/300x100" class="logo" id="navbar_logo_text">-->
     </div>
     <div id="options">
+      <span id="spacer"></span>
       <span class="navbar_option_container" id="option1">
         <p class="option_text_navbar"> Option 1 </p>
         <span id="option1_menu" class="navbar_menu">
@@ -35,29 +36,31 @@
       </span>
       <p id="option4"> Option 4 </p>
       <span class="navbar_option_container" id="options_end">
-        <p> &Xi; </p>
+        <a href="javascript:void(0);" onclick="toggleMenu()"> &Xi; </a>
         <span id="options_end_menu" class="navbar_menu">
           <span id="options_toosmall">
             
           </span>
           <span class="navbar_option_container" id="option5_container">
+            <p class="option_text_navbar"> Sub-Option 1 </p>
             <span id="option5_menu" class="navbar_menu">
               <p> Sub-sub Option 1 </p>
               <p> Sub-sub Option 2 </p>
               <p> Sub-sub Option 3 </p>
               <p> Sub-sub Option 4 </p>
             </span>
-            <p> Sub Option 1 </p>
+            <p class="option_text_collapsed"> Sub-Option 1 </p>
           </span>
           <p> Sub Option 2 </p>
           <span class="navbar_option_container" id="option6_container">
+            <p class="option_text_navbar"> Sub-Option 3 </p>
             <span id="option6_menu" class="navbar_menu">
               <p> Sub-sub Option 1 </p>
               <p> Sub-sub Option 2 </p>
               <p> Sub-sub Option 3 </p>
               <p> Sub-sub Option 4 </p>
             </span>
-            <p> Sub Option 3 </p>
+            <p class="option_text_collapsed"> Sub-Option 3 </p>
           </span>
         </span>
       </span>
@@ -71,103 +74,34 @@
       </div>
       <img class="right " src="https://dummyimage.com/350x350">
     </div>
-    <div class="notes" id="notes"></div>
-    <div class="page" id="page2">
-      <div class="text right">
-        <h1> Heading </h1>
-        <p>Nunc justo purus, ullamcorper a felis eget, sodales faucibus massa. Nunc a laoreet lorem, non iaculis felis. Ut ex ante, facilisis ultricies ornare vel, placerat a elit. Suspendisse tempor tortor sed lacus tincidunt, ut mollis nibh convallis. Integer nunc nunc, vehicula a semper non, placerat iaculis diam. Suspendisse varius ornare accumsan. Suspendisse ipsum nulla, euismod quis lobortis tincidunt, hendrerit eu elit. Phasellus sit amet maximus neque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus id tempus neque. Fusce commodo sollicitudin eros quis viverra.</p>
-      </div>
-      <img id="move1" src="https://dummyimage.com/128x128" class="unimportant">
-      <img id="move2" src="https://dummyimage.com/128x128" class="unimportant">
-
+    <div class="notes"></div>
+    <div class="page pagesmall" id="page2">
+        <div class="text right">
+          <h1 class="right"> Heading </h1>
+          <p>Nunc justo purus, ullamcorper a felis eget, sodales faucibus massa. Nunc a laoreet lorem, non iaculis felis. Ut ex ante, facilisis ultricies ornare vel, placerat a elit. Suspendisse tempor tortor sed lacus tincidunt, ut mollis nibh convallis. Integer nunc nunc, vehicula a semper non, placerat iaculis diam. Suspendisse varius ornare accumsan. Suspendisse ipsum nulla, euismod quis lobortis tincidunt, hendrerit eu elit. Phasellus sit amet maximus neque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus id tempus neque. Fusce commodo sollicitudin eros quis viverra.</p>
+        </div>
+        <img id="move1" src="https://dummyimage.com/128x128" class="unimportant">
+        <img id="move2" src="https://dummyimage.com/128x128" class="unimportant">
     </div>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> pretty sweet, eh? </p>
-    <p> be sure to check out my really cool menus. </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
-    <p> content </p>
+    <div class="notes"></div>
+    <div class="page pagesmall" id="page3">
+        <div class="text" style="width: 100%;">
+          <div class="center_right">
+            <h1 class="right"> Heading </h1>
+            <p>Pulvinar proin gravida hendrerit lectus a. Id consectetur purus ut faucibus pulvinar. Est velit egestas dui id ornare arcu odio. Ut etiam sit amet nisl purus in mollis. Consequat nisl vel pretium lectus quam id. Nibh tellus molestie nunc non blandit massa. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Quis imperdiet massa tincidunt nunc. Enim facilisis gravida neque convallis a cras semper auctor. Tellus molestie nunc non blandit massa enim nec. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Auctor eu augue ut lectus arcu bibendum at varius. Odio aenean sed adipiscing diam donec adipiscing tristique.</p>
+          </div>
+          <div class="unimportant" style="height: 66vh; position: relative; margin-top: -33vh;">
+            <img class="parallaxLayer" id="parallaxLayer1" src="https://fakeimg.pl/300x300/000%2C05/000%2C255/?text=Layer1">
+            <img class="parallaxLayer" id="parallaxLayer2" src="https://fakeimg.pl/300x300/000%2C05/000%2C255/?text=Layer2">
+            <img class="parallaxLayer" id="parallaxLayer3" src="https://fakeimg.pl/300x300/000%2C05/000%2C255/?text=Layer3">
+          </div>
+        </div>
+      </div>
+      <div class="notes"></div>
+      <div class="page pagesmall" id="page4">
+        
+      </div>
+    </div>
   </div>
 </body>
 </html>

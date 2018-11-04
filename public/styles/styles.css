@@ -6,7 +6,7 @@ body {
   background-color: white;
   max-width: 100%;
   overflow-x: hidden;
-  height:auto!important;
+  height: auto !important;
 }
 
 html,
@@ -50,6 +50,11 @@ div.text {
   min-height: 92vh;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: show;
+}
+
+.page.pagesmall {
+  min-height: 66vh;
 }
 
 .moving_img {
@@ -62,44 +67,133 @@ div.text {
   margin-top: 132px;
 }
 
+#spacer {
+  visibility: none;
+}
+
 img.right {
   position: absolute;
-  margin-top: -10vh;
+  margin-top: -200px;
   right: 10%;
-  width: 30vw;
-  height: 30vw;
+  width: 300px;
+  height: 300px;
 }
 
-.waytoosmall img.unimportant {
-  display: none
+#navbar a {
+  text-decoration: none;
 }
 
-.waytoosmall img.right {
-  position: relative;
-  display: block;
-  margin: 5px auto;
-  width: 90vw;
-  height: 90vw;
-  right: auto;
+.v_center {
+  height: 55vh;
+  margin: auto 0;
+}
+
+.parallaxLayer {
+  position: absolute;
+  width: 26%;
+}
+
+#parallaxLayer1 {
+  left: 2.3%;
+  transform: translate3d(0, 0, -0.2px) scale(1.05);
+}
+
+#parallaxLayer2 {
+  left: 7.3%;
+  transform: translate3d(0, 0, -0.4px) scale(1.10);
+}
+
+#parallaxLayer3 {
+  left: 13.3%;
+  transform: translate3d(0, 0, -0.6px) scale(1.15);
+}
+
+@media all and (max-width: 914px) { /* 914 ~= ((totalOptions + 1) * 128) / .7 */
+  /*
+   * we use the #body selector (which selects decendants of the <body> tag that match the criterion, i.e. everything that matches the criterion) to increase the specificity in order to override stuff.
+   * It's a bit cheaty, but it works. 
+   */
+
+  #body .navbar_option_container:hover > .navbar_menu {
+    display: none;
+  }
+  #body .navbar_option_container.open > .navbar_menu {
+    display: block;
+    position: absolute;
+    right: 0;
+    width: 15em;
+    top: 0;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+
+  #body .navbar_option_container.open #options_toosmall .navbar_menu,
+  #body .navbar_option_container.open .navbar_option_container > .navbar_menu {
+    display: block;
+    width: 13em;
+    position: static;
+    margin-left: 3em;
+    text-align: left !important;
+  }
+
+  #body .navbar_option_container.open .navbar_option_container:hover > .navbar_menu > p {
+    text-align: left !important;
+  }
+
+  #body .navbar_option_container.open .navbar_option_container > p,
+  #body .navbar_option_container.open > .navbar_menu > p,
+  #body #options_toosmall > p {
+    text-align: left !important;
+    margin-left: 1em;
+  }
+
+  #body #options_toosmall .option_text_navbar {
+    display: block;
+  }
+
+  #body #options_toosmall .option_text_collapsed {
+    display: none;
+  }
+
+  #body .navbar_option_container.open #options_toosmall {
+    display: block;
+  }
+
+  #body img.unimportant, #body div.unimportant {
+    display: none;
+  }
+
+  #body img.right {
+    position: relative;
+    display: block;
+    margin: 5px auto;
+    width: 90vw;
+    height: 90vw;
+    right: auto;
+  }
+
+  #body div.left, #body div.right, #body div.center_right {
+    position: relative;
+    width: 90%;
+    margin: auto;
+  }
+
+  #body h1.left, #body h1.right {
+    text-align: center;
+    margin: auto;
+    width: 90%;
+    overflow-y: visible;
+    font-size: 3em;
+  }
+
+  #body .notes.moving {
+    animation: none; /* they are probably on mobile, so let's not eat all of their ram */
+  }
 }
 
 h1.left {
   position: relative;
   margin-left: 5%;
-}
-
-.waytoosmall div.left, .waytoosmall div.right {
-  position: relative;
-  width: 90%;
-  margin: auto;
-}
-
-.waytoosmall h1.left, .waytoosmall h1.right {
-  text-align: center;
-  margin: auto;
-  width: 90%;
-  overflow-x: wrap;
-  font-size: 3em;
 }
 
 #navbar {
@@ -198,7 +292,7 @@ p:before, p:after {
   margin-left: 8vh;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   height: 8vh;
   min-height: 64px;
@@ -234,6 +328,10 @@ p:before, p:after {
   min-width: 64px;
 }
 
+div.center_right {
+  margin-left: 40%;
+  width: 60%;
+}
 
 @keyframes moving-notes {
   0% {
@@ -253,6 +351,8 @@ p:before, p:after {
   overflow-x: hidden;
   overflow-y: scroll;
   position: absolute;
+  perspective: 4px;
+  perspective-origin: 13.3%;
 }
 
 #marker {
@@ -275,10 +375,6 @@ p:before, p:after {
 
 .notes.moving {
   animation: moving-notes 100s linear infinite;
-}
-
-.waytoosmall .notes.moving {
-  animation: none; /* they are probably on mobile, so let's not eat all of their ram */
 }
 
 a {

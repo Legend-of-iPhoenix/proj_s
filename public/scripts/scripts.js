@@ -31,34 +31,11 @@ var movingElements = [
   }
 ];
 window.onload = function () {
-  document.getElementById("content").onscroll = function () {
-    var navbar = document.getElementById("navbar");
-    var content = document.getElementById("content");
-    if (content.scrollTop != 0 || document.body.classList[0] == "toosmall" || document.body.classList[0] == "waytoosmall") {
-      navbar.classList = 'navbar scrolled';
-    } else {
-      navbar.classList = "navbar";
-    }
-
-    moveMovingElements();
-  }
+  document.getElementById("content").onscroll = moveMovingElements;
 
   window.onresize = function () {
     var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    console.log("resized: w=" + window.innerWidth + ' h='+ window.innerHeight);
-    if (.7*width < 128 * (totalOptions + 1)) {
-      document.body.classList = "toosmall";
-      document.getElementById("navbar").classList = 'navbar scrolled';
-      if (width < 600) {
-        document.body.classList = "waytoosmall toosmall"
-      }
-    } else {
-      if (document.body.classList[0]) {
-        moveMovingElements();
-      }
-      document.body.classList = "";
-      document.getElementById("content").onscroll(); // reset navbar classes
-    }
+    moveMovingElements();
     if (.7 * width < (totalOptions + 1) * 128) {
       if (showingOptions) {
         showingOptions = false;

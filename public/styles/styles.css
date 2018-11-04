@@ -7,6 +7,7 @@ body {
   max-width: 100%;
   overflow-x: hidden;
   height: auto !important;
+  transition: margin .5s cubic-bezier(.5,0,.5,1); /* gently modified ease-in-out */
 }
 
 html,
@@ -117,6 +118,7 @@ img.right {
   #body .navbar_option_container:hover > .navbar_menu {
     display: none;
   }
+
   #body .navbar_option_container.open > .navbar_menu {
     display: block;
     position: absolute;
@@ -125,6 +127,10 @@ img.right {
     top: 0;
     height: 100vh;
     overflow-y: scroll;
+  }
+
+  #body .navbar_option_container.open * {
+    background-color: #361c50; /* darker purple */
   }
 
   #body .navbar_option_container.open #options_toosmall .navbar_menu,
@@ -147,11 +153,13 @@ img.right {
     margin-left: 1em;
   }
 
-  #body #options_toosmall .option_text_navbar {
+  #body #options_toosmall .option_text_navbar,
+  #body #options > .navbar_option_container > .navbar_menu .option_text_navbar {
     display: block;
   }
 
-  #body #options_toosmall .option_text_collapsed {
+  #body #options_toosmall .option_text_collapsed,
+  #body #options > .navbar_option_container > .navbar_menu .option_text_collapsed {
     display: none;
   }
 
@@ -232,12 +240,13 @@ h1.left {
 }
 
 #options > .navbar_option_container > .option_text_collapsed,
+#options > .navbar_option_container > .navbar_menu .option_text_navbar,
 #options_toosmall .option_text_navbar {
   display: none;
 }
 
 #options_toosmall .option_text_collapsed,
-#options > .navbar_option_container > .option_text_navbar {
+#options > .navbar_option_container .option_text_navbar {
   display: block;
 }
 
@@ -343,6 +352,11 @@ div.center_right {
     background: url("https://i.imgur.com/Wl6E9rE.png") -1232px 0;
     background-size: auto 5vh;
   }
+}
+
+#dragons {
+  position: absolute;
+  top: -1000px;
 }
 
 #content {

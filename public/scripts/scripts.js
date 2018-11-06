@@ -42,6 +42,7 @@ window.onload = function () {
         for (var i = 1; i <= totalOptions; i++) {
           document.getElementById("options_toosmall").appendChild(document.getElementById("option"+i));
         }
+        document.getElementById("navbar_menu_text").innerText = "Menu";
       }
     } else {
       if (!showingOptions) {
@@ -49,6 +50,7 @@ window.onload = function () {
         for (var i = 1; i <= totalOptions; i++) {
           document.getElementById("options").insertBefore(document.getElementById("option"+i), document.getElementById("options_end"));
         }
+        document.getElementById("navbar_menu_text").innerText = "More...";
       }
     }
   }

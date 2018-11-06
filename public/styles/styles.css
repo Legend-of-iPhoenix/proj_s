@@ -26,7 +26,7 @@ h1 {
 }
 
 div.left {
-  margin-left: 1%;
+  margin-left: 7%;
 }
 
 div.right {
@@ -43,7 +43,7 @@ div.text p {
 }
 
 div.text {
-  width: 45%;
+  width: 30%;
 }
 
 .page {
@@ -75,9 +75,10 @@ div.text {
 img.right {
   position: absolute;
   margin-top: -200px;
-  right: 10%;
+  right: 5%;
   width: 300px;
   height: 300px;
+  transform: translateZ(-.5px);
 }
 
 #navbar a {
@@ -96,17 +97,17 @@ img.right {
 
 #parallaxLayer1 {
   left: 2.3%;
-  transform: translate3d(0, 0, -0.2px) scale(1.05);
+  transform: translateZ(-0.2px) scale(1.05);
 }
 
 #parallaxLayer2 {
   left: 7.3%;
-  transform: translate3d(0, 0, -0.4px) scale(1.10);
+  transform: translateZ(-0.4px) scale(1.10);
 }
 
 #parallaxLayer3 {
   left: 13.3%;
-  transform: translate3d(0, 0, -0.6px) scale(1.15);
+  transform: translateZ(-0.6px) scale(1.15);
 }
 
 @media all and (max-width: 914px) { /* 914 ~= ((totalOptions + 1) * 128) / .7 */
@@ -127,9 +128,11 @@ img.right {
     top: 0;
     height: 100vh;
     overflow-y: scroll;
+    overflow-x: hidden;
   }
 
-  #body .navbar_option_container.open * {
+  #body .navbar_option_container.open #options_end_menu *,
+  #body .navbar_option_container.open #options_end_menu {
     background-color: #361c50; /* darker purple */
   }
 
@@ -178,17 +181,19 @@ img.right {
     width: 66vw;
     height: 66vw;
     right: auto;
+    transform: translateZ(0px);
   }
 
   #body div.left, #body div.right, #body div.center_right {
     position: relative;
-    width: 90%;
+    width: 80%;
     margin: auto;
   }
 
   #body h1.left, #body h1.right {
     text-align: center;
     margin: auto;
+    margin-top: 1vh;
     width: 90%;
     overflow-y: visible;
     font-size: 3em;
@@ -201,7 +206,8 @@ img.right {
 
 h1.left {
   position: relative;
-  margin-left: 5%;
+  margin-left: 10%;
+  margin-top: 5%;
 }
 
 #navbar {
@@ -326,11 +332,8 @@ p:before, p:after {
   opacity: 0;
 }
 
-#navbar #logo_container img {
-  display: inline-block;
-}
-
 #navbar_logo {
+  display: inline-block;
   height: 8vh;
   width: 8vh;
   min-height: 64px;
@@ -402,4 +405,41 @@ a:visited:hover {
 
 a:visited {
   color: #fff;
+}
+
+#footer {
+  height: 10vh;
+  width: 100%;
+  background-color: #333;
+  box-shadow: 0px 0px 3px 0px black;
+  padding: 2px;
+}
+
+#footer p {
+  color: #eee;
+  margin-left: 2%;
+}
+
+#links svg {
+  vertical-align: middle;
+}
+
+#links a {
+  margin: 2px;
+}
+
+.octicon-mark-github {
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border: 0px;
+  border-radius: 3px;
+}
+
+.octicon-link {
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border: 0px;
+  border-radius: 3px;
 }

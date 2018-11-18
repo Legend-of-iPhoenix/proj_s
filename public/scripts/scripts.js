@@ -12,22 +12,22 @@ var movingElements = [
     classes: ['notes', 'notes moving']
   },
   {
-    selector: "#move1",
+    selector: ".move1",
     start: 0.8,
     end: 1,
     from: 'right',
     startMove: .66,
     endMove: 1,
-    classes: /* don't mind me, I'm just an */ ['unimportant moving_img', 'unimportant moving_img']
+    classes: /* don't mind me, I'm just an */ ['unimportant moving_img move1', 'unimportant moving_img move1']
   },
   {
-    selector: "#move2",
+    selector: ".move2",
     start: 0.75,
     end: 1,
     from: 'right',
     startMove: .66,
     endMove: 1,
-    classes: ['unimportant moving_img', 'unimportant moving_img']
+    classes: ['unimportant moving_img move2', 'unimportant moving_img move2']
   }
 ];
 window.onload = function () {

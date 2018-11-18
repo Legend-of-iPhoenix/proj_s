@@ -6,8 +6,9 @@ body {
   background-color: white;
   max-width: 100%;
   overflow-x: hidden;
-  height: auto !important;
   transition: margin .5s cubic-bezier(.5,0,.5,1); /* gently modified ease-in-out */
+  height: 100vh;
+  top: 0;
 }
 
 html,
@@ -46,6 +47,10 @@ div.text {
   width: 30%;
 }
 
+div.text.full {
+  width: 100%;
+}
+
 .page {
   width: 100%;
   min-height: 92vh;
@@ -64,7 +69,7 @@ div.text {
   width: 128px;
 }
 
-#move2 {
+.move2 {
   margin-top: 132px;
 }
 
@@ -74,10 +79,10 @@ div.text {
 
 img.right {
   position: absolute;
-  margin-top: -200px;
+  margin-top: -250px;
   right: 5%;
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
   transform: translateZ(-.5px);
 }
 
@@ -90,22 +95,28 @@ img.right {
   margin: auto 0;
 }
 
+.parallaxContainer {
+  height: 66vh;
+  position: relative;
+  margin-top: -20vh;
+}
+
 .parallaxLayer {
   position: absolute;
   width: 26%;
 }
 
-#parallaxLayer1 {
+.parallaxLayer1 {
   left: 2.3%;
   transform: translateZ(-0.2px) scale(1.05);
 }
 
-#parallaxLayer2 {
+.parallaxLayer2 {
   left: 7.3%;
   transform: translateZ(-0.4px) scale(1.10);
 }
 
-#parallaxLayer3 {
+.parallaxLayer3 {
   left: 13.3%;
   transform: translateZ(-0.6px) scale(1.15);
 }
@@ -127,6 +138,8 @@ img.right {
     width: 15em;
     top: 0;
     height: 100vh;
+    margin: 0;
+    border: 0;
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -360,6 +373,7 @@ div.center_right {
 #dragons {
   position: absolute;
   top: -1000px;
+  display: none;
 }
 
 #content {
@@ -412,12 +426,29 @@ a:visited {
   width: 100%;
   background-color: #333;
   box-shadow: 0px 0px 3px 0px black;
+  justify-content: center;
+  text-align: center;
+}
+
+#footerRight {
+  box-sizing: border-box;
   padding: 2px;
+  float: right;
+  height: 10vh;
+  width: 50%;
+}
+
+#footerLeft {
+  box-sizing: border-box;
+  padding: 2px;
+  float: left;
+  height: 10vh;
+  width: 50%;
 }
 
 #footer p {
   color: #eee;
-  margin-left: 2%;
+  margin: 0 0 0 2%;
 }
 
 #links svg {

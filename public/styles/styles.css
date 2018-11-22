@@ -121,7 +121,7 @@ img.right {
   transform: translateZ(-0.6px) scale(1.15);
 }
 
-@media all and (max-width: 914px) { /* 914 ~= ((totalOptions + 1) * 128) / .7 */
+@media all and (max-width: 60em) { /* approx = ((totalOptions + 1) * 128) / .7 */
   /*
    * we use the #body selector (which selects decendants of the <body> tag that match the criterion, i.e. everything that matches the criterion) to increase the specificity in order to override stuff.
    * It's a bit cheaty, but it works. 

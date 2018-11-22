@@ -1,0 +1,42 @@
+* {
+	font-family: 'Muli', sans-serif;
+}
+
+.editor {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+.result {
+	width: 100%; height: 50vh; font-family: monospace;
+}
+
+.option_text_collapsed {
+	display: none;
+}
+
+#dragons {
+	display: none;
+}
+
+.navbar_menu {
+	display: block;
+  width: 13em;
+  position: static;
+  margin-left: 20px;
+}
+
+.deletepage {
+	background: #f55;
+	margin-right: 5px;
+	border-radius: 2px;
+}
+
+.newpage {
+	background: #5f5;
+	margin-right: 5px;
+	border-radius: 2px;
+}
+.pagetitle {
+	display: inline-block;
+}

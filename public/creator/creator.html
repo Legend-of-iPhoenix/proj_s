@@ -4,9 +4,34 @@
   <title></title>
   <script src="settings.js"></script>
   <script src="../scripts/settingsparser.js"></script>
+  <link rel=stylesheet href="creator.css">
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 </head>
 <body>
-  <textarea style="width: 100%; height: 50vh; font-family: monospace;">
+  <h1> General Webpage Settings </h1>
+  <div id="menuEdit">
+    <label for="logosrc">Icon (url): </label>
+    <input type="text" id="icon" name="logosrc" oninput="input(this)">
+    <br />
+    <label for="title">Title: </label>
+    <input type="text" id="title" name="title" oninput="input(this)">
+  </div>
+  <h1> Navbar Editor </h1>
+  <div id="menu" class="editor">
+    
+  </div>
+  <h1> Page Editor </h1>
+  <div id="pages" class="editor">
+    
+  </div>
+  <h1> Generated HTML </h1>
+  <p> This is the generated code defining the structure and content of the webpage </p>
+  <textarea id="html_result" class="result">
+    
+  </textarea>
+  <h1> JSON settings </h1>
+  <p> This is the data that the site creator/editor used to generate your site. Save this file to edit your page later. </p>
+  <textarea id="json_result" class="result">
     
   </textarea>
 </body>

@@ -31,7 +31,6 @@ var movingElements = [
   }
 ];
 window.onload = function () {
-    alert(window.innerWidth)
   document.getElementById("content").onscroll = moveMovingElements;
 
   window.onresize = function () {

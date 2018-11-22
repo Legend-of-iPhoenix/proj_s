@@ -2,6 +2,10 @@
 	font-family: 'Muli', sans-serif;
 }
 
+#editor > h1, .centered {
+	text-align: center;
+}
+
 .editor {
 	border: 1px solid black;
 	padding: 5px;
@@ -26,17 +30,22 @@
   margin-left: 20px;
 }
 
-.deletepage {
+.delete {
 	background: #f55;
 	margin-right: 5px;
 	border-radius: 2px;
 }
 
-.newpage {
+.new {
 	background: #5f5;
 	margin-right: 5px;
 	border-radius: 2px;
 }
+
 .pagetitle {
 	display: inline-block;
+}
+
+#editor {
+	display: none;
 }

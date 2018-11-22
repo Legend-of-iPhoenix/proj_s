@@ -1,8 +1,8 @@
+const PRODUCTION = true;
+
 var data = {};
 
-window.onload = function () {
-	parse(settings);
-}
+var settings = {};
 
 var menuHTML = "";
 var contentHTML = "";
@@ -11,10 +11,26 @@ var first = true;
 var first_first = true;
 var _;
 
+function load() {
+	var file = document.getElementById('importJSON').files[0];
+	var reader = new FileReader();
+	reader.onload = function(event) {
+		try {
+			settings = JSON.parse(event.target.result);
+			document.getElementById('editor').style.display = "block";
+			document.getElementById('import').style.display = "none";
+			parse(settings);
+		} catch (e) {
+			alert("Improperly formatted JSON file.");
+		}
+	}
+	reader.readAsText(file);
+}
+
 function parse(jsonData) {
 	var resultHTML = document.getElementById("html_result");
 	var resultJSON = document.getElementById("json_result");
-	resultJSON.value = 'var settings = ' + JSON.stringify(settings);
+	resultJSON.value = JSON.stringify(settings);
 	document.getElementById("icon").value = jsonData.logosrc;
 	document.getElementById("title").value = jsonData.title;
 
@@ -34,14 +50,15 @@ function parse(jsonData) {
 				var _c = n ? 40 : 20;
 				var path = 'menu/' + index + '/'
 				document.getElementById("menu").innerHTML += '<p style="margin-left: ' + (_c-20) + 'px;"><input name="' + path + 'text" placeholder="text" value="' + data.text + '" oninput="input(this)"></p>'
-				document.getElementById("menu").innerHTML += data.children.map((c, i) => {
+				document.getElementById("menu").innerHTML += data.children.map((c, i, a) => {
 					if (n) {
 						var path = 'menu/' + _ + '/children/' + index + '/children/' + i + '/';
 					} else {
 						var path = 'menu/' + index + '/children/' + i + '/';
 					}
-					return '<p style="margin-left: ' + _c + 'px"><input name="' + path + 'href" placeholder="link" value="' + c.href + '" oninput="input(this)"><input name="' + path + 'text" placeholder="text" value="' + c.text + '" oninput="input(this)"></p>'
+					return '<p style="margin-left: ' + _c + 'px"><input name="' + path + 'href" placeholder="link" value="' + c.href + '" oninput="input(this)"><input name="' + path + 'text" placeholder="text" value="' + c.text + '" oninput="input(this)">' + (i==a.length-1 ? '<input type="button" class="new" onclick="addMenuItem('+index+','+(n?_:false)+')" value="+">' : '') + '</p>'
 				}).join('\n');
+
 			}
 
 			var childrenHTML = data.children.map(child => '<p><a href="' + child.href + '">' + cleanse(child.text) + '</a></p>').join('\n');
@@ -68,11 +85,11 @@ function parse(jsonData) {
 	contentHTML = '<div id="content">\n' + jsonData.pages.map((page, pageindex) => {
 		var styleData = styles[page.style];
 
-		var pageHTML = '<div class="' + styleData.type + '" id="page' + (pageindex + 1) + '">\n';
+		var pageHTML = '<div class="' + styleData.classes + '" id="page' + (pageindex + 1) + '">\n';
 		var template = styleData.template;
 		var editingHTML = ''
 		if (first) {
-			document.getElementById("pages").innerHTML += '<br />\n<input type="button" class="deletepage" onclick="deletepage(' + pageindex + ')" value="x" title="Delete this page"><h3 class="pagetitle"> page' + (pageindex + 1) + " (" + page.style + ')</h3>\n<h4>Page information:</h4>\n<ul>' + styles[page.style].type.split(' ').filter(type=>type!="page").map(type=>identifiers2[type]).join('\n') + "</ul>\n<h4>Images:</h4>"
+			document.getElementById("pages").innerHTML += '<br />\n<input type="button" class="delete" onclick="deletepage(' + pageindex + ')" value="x" title="Delete this page"><h3 class="pagetitle"> page' + (pageindex + 1) + " (" + page.style + ')</h3>\n<h4>Page information:</h4>\n<ul>' + styles[page.style].type.split(' ').map(type=>identifiers2[type]).join('\n') + "</ul>\n<h4>Images:</h4>"
 		}
 		page.imgs.map((img, index) => {
 			if (first) {
@@ -115,37 +132,42 @@ function parse(jsonData) {
 			} else {
 				return ''
 			}
-		}).join('\n') + '</select>\n<input type="button" class="newpage" onclick="newpage()" value="+">';
+		}).join('\n') + '</select>\n<input type="button" class="new" onclick="newpage()" value="+">';
 		document.getElementById("pages").innerHTML += '<hr>\n'+newpageHTML;
 	}
 
-	resultHTML.value = '<!DOCTYPE html>\n<html>\n<head>\n<title>' + jsonData.title + '</title>\n<meta charset="utf-8">\n<link rel=stylesheet href="styles/styles.css">\n<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">\n<script type="text/javascript" src="scripts/scripts.js"></script>\n</head>\n<body id="body">\n' + menuHTML + '\n' + contentHTML + '</body></html>';
+	resultHTML.value = ('<!DOCTYPE html>\n<html>\n<head>\n<title>' + jsonData.title + '</title>\n<meta charset="utf-8">\n<link rel=stylesheet href="styles/styles.css">\n<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">\n<script type="text/javascript" src="scripts/scripts.js"></script>\n</head>\n<body id="body">\n' + menuHTML + '\n' + contentHTML + '</body></html>').replace(/\n/g,PRODUCTION?'':'\n');
 	first = false;
 }
 
 var styles = {
 	"left_1": {
-		"type": "page pagefull pageleft",
+		"type": "pagefull pageleft",
+		"classes": "page",
 		"template": '<h1 class="left">|1</h1>\n<div class="text left">\n|2\n</div>\n<img class="right" src="@1">',
 		"text": ["heading", "text"]
 	},
 	"right_2": {
-		"type": "page pagesmall pageright",
-		"template": '<div class="text right">\n<h1 class="right">|1</h1>\n<p>|2</p>\n</div>\n<img src="@1" class="move1 unimportant">\n<img src="@2" class="move2 unimportant">',
+		"type": "pagesmall pageright",
+		"classes": "page pagesmall",
+		"template": '<div class="text right">\n<h1 class="right">|1</h1>\n|2\n</div>\n<img src="@1" class="move1 unimportant">\n<img src="@2" class="move2 unimportant">',
 		"text": ["heading", "text"]
 	},
 	"right_parallax": {
-		"type": "page pagesmall pageright",
-		"template": '<div class="text full">\n<div class="center_right">\n<h1 class="right">|1</h1>\n<p>|2</p>\n</div>\n<div class="unimportant parallaxContainer">\n<img class="parallaxLayer parallaxLayer1" src="@1">\n<img class="parallaxLayer parallaxLayer2" src="@2">\n<img class="parallaxLayer parallaxLayer3" src="@3">\n</div>\n</div>',
+		"type": "pagesmall pageright",
+		"classes": "page pagesmall",
+		"template": '<div class="text full">\n<div class="center_right">\n<h1 class="right">|1</h1>\n|2\n</div>\n<div class="unimportant parallaxContainer">\n<img class="parallaxLayer parallaxLayer1" src="@1">\n<img class="parallaxLayer parallaxLayer2" src="@2">\n<img class="parallaxLayer parallaxLayer3" src="@3">\n</div>\n</div>',
 		"text": ["heading", "text"]
 	},
 	"blank_small": {
-		"type": "page pagesmall pageblank",
+		"type": "pagesmall pageblank",
+		"classes": "page pagesmall",
 		"template": '',
 		"text": []
 	},
 	"blank": {
-		"type": "page pagefull pageblank",
+		"type": "pagefull pageblank",
+		"classes": "page",
 		"template": '',
 		"text": []
 	}
@@ -207,7 +229,7 @@ function setDescendantProp(obj, desc, value) {
 	return obj[arr[0]] = cleanse2(value);
 }
 
-var footerData = '<div id="footer">\n<span id="footerLeft">\n<p> Site &copy; _iPhoenix_ </p>\n<p> Icons by <a target="_blank" href="https://octicons.github.com/">Github Octicons</a>.</p>\n</span>\n<span id="footerRight">\n<span id="links"><a id="github" target="_blank" href="https://github.com/Legend-of-iPhoenix"><svg class="octicon octicon-mark-github" viewBox="-4 -4 24 24" version="1.1" aria-hidden="true"><path fill-rule="evenodd" fill="#000" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg></a><a id="website" target="_blank" href="https://legend-of-iphoenix.github.io"><svg class="octicon octicon-link" viewBox="-4 -4 24 24" fill="#000" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a></span>>\n</span>\n</div>\n</div>'
+var footerData = '<div id="footer">\n<span id="footerLeft">\n<p> Site &copy; _iPhoenix_ </p>\n<p> Icons by <a target="_blank" href="https://octicons.github.com/">Github Octicons</a>.</p>\n</span>\n<span id="footerRight">\n<span id="links"><a id="github" target="_blank" href="https://github.com/Legend-of-iPhoenix"><svg class="octicon octicon-mark-github" viewBox="-4 -4 24 24" version="1.1" aria-hidden="true"><path fill-rule="evenodd" fill="#000" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg></a><a id="website" target="_blank" href="https://legend-of-iphoenix.github.io"><svg class="octicon octicon-link" viewBox="-4 -4 24 24" fill="#000" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a></span>\n</span>\n</div>\n</div>'
 
 function cleanse(text) {
 	var element = document.createElement('p');
@@ -217,4 +239,33 @@ function cleanse(text) {
 
 function cleanse2(text) {
 	return text.replace(/"/g, '\\"').replace(/'/g, "\\'");
+}
+
+function addMenuItem(index, n) {
+	if (n === false) {
+		settings.menu[index].children.push({
+			"text": "text",
+			"href": "#nowhere"
+		});
+	} else {
+		settings.menu[n].children[index].children.push({
+			"text": "text",
+			"href": "#nowhere"
+		});
+	}
+	first = true;
+	parse(settings);
+}
+
+function downloadJSON() {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(settings)));
+  element.setAttribute('download', 'settings');
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
 }

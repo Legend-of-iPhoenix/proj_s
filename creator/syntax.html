@@ -3,7 +3,7 @@
 <head>
   <title></title>
   <style>
-    p, h1 {
+    p, h1, h2 {
       font-family: "Arial"
     }
     span {
@@ -11,16 +11,31 @@
       font-size: 14pt;
     }
   </style>
+  <script>
+    function cleanse() {
+      var text = document.getElementById("input").value;
+      var element = document.createElement('p');
+      element.innerText = text;
+      document.getElementById("output").value = element.innerHTML;
+    }
+  </script>
 </head>
 <body>
-  <h1> Syntax </h1>
-  <p><i> a lesson in basic HTML</i></p>
-  <br />
+  <h1> (basic) HTML Syntax Guide </h1>
+  <p> HTML uses tags to define styling. All tags are wrapped with angle brackets (<code>&lt;</code> and <code>&gt;</code>). </p>
+  <p> This means that the less than and greater than signs need to be escaped to be shown literally. You can use the text escaper tool at the bottom of this page to escape text. </p>
   <p> Surround <span>P</span>aragraphs with <code>&lt;p&gt;</code> and <code>&lt;/p&gt;</code></p>
+  <p> Add extra line <span>BR</span>eaks (newlines) with <code>&lt;br&gt;</code>. (The text escaper tool can handle this)</p>
   <p> Use <code>&lt;p&gt;</code> and <code>&lt;/p&gt;</code> to wrap <i><span>I</span>talicized text</i></p>
   <p> <code>&lt;b&gt;</code> and <code>&lt;/b&gt;</code> make text <b><span>B</span>old</b></p>
   <p> For <u><span>U</span>nderlines</u>, use <code>&lt;u&gt;</code> and <code>&lt;/u&gt;</code></p>
   <p> Links/<a href="#"><span>A</span>nchors</a> are different. Use <code>&lt;a href="link"&gt;text&lt;/a&gt;</code></p>
   <p> <span>U</span>nordered <span>L</span>ists are wrapped with <code>&lt;ul&gt;</code> and <code>&lt;/ul&gt;</code>, with each <span>L</span>ist <span>I</span>tem wrapped with <code>&lt;li&gt;</code> and <code>&lt;/li&gt;</code></p>
+  <p> <span>O</span>rdered <span>L</span>ists are the same as unordered lists, but they use <code>&lt;ol&gt;</code> and <code>&lt;/ol&gt;</code> tags. </p>
+  <h2> Text escaper </h2>
+  <p> If characters aren't showing up right in text, they may need to be escaped first. </p>
+  <p> Paste or type text into the first text box and use the text from the second text box. </p>
+  <textarea id="input" oninput="cleanse()"></textarea>
+  <textarea id="output" disabled></textarea>
 </body>
 </html>

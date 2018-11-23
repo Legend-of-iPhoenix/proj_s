@@ -1,4 +1,4 @@
-const PRODUCTION = true;
+const PRODUCTION = false;
 
 var data = {};
 
@@ -49,14 +49,14 @@ function parse(jsonData) {
 				}
 				var _c = n ? 40 : 20;
 				var path = 'menu/' + index + '/'
-				document.getElementById("menu").innerHTML += '<p style="margin-left: ' + (_c-20) + 'px;"><input name="' + path + 'text" placeholder="text" value="' + data.text + '" oninput="input(this)"></p>'
+				document.getElementById("menu").innerHTML += '<p style="margin-left: ' + (_c-20) + 'px;"><input name="' + path + 'text" placeholder="text" value="' + data.text + '" oninput="input(this)"><input type="button" class="toggle" onclick="toggleChildren('+index+','+(n?_:false)+',this)" value="Submenu"></p>'
 				document.getElementById("menu").innerHTML += data.children.map((c, i, a) => {
 					if (n) {
 						var path = 'menu/' + _ + '/children/' + index + '/children/' + i + '/';
 					} else {
 						var path = 'menu/' + index + '/children/' + i + '/';
 					}
-					return '<p style="margin-left: ' + _c + 'px"><input name="' + path + 'href" placeholder="link" value="' + c.href + '" oninput="input(this)"><input name="' + path + 'text" placeholder="text" value="' + c.text + '" oninput="input(this)">' + (i==a.length-1 ? '<input type="button" class="new" onclick="addMenuItem('+index+','+(n?_:false)+')" value="+">' : '') + '</p>'
+					return '<p style="margin-left: ' + _c + 'px"><input name="' + path + 'href" placeholder="link" value="' + c.href + '" oninput="input(this)"><input name="' + path + 'text" placeholder="text" value="' + c.text + '" oninput="input(this)"><input type="button" class="delete" onclick="deleteChild('+index+','+i+','+(n?_:false)+')" value="-">' + (i==a.length-1 ? '<input type="button" class="new" onclick="addMenuItem('+index+','+(n?_:false)+')" value="+">' : '') + '</p>'
 				}).join('\n');
 
 			}
@@ -67,7 +67,7 @@ function parse(jsonData) {
 		} else {
 			if (first) {
 				var path = 'menu/' + index + '/'
-				document.getElementById("menu").innerHTML += '<p><input name="' + path + 'href" placeholder="link" value="' + data.href + '" oninput="input(this)"><input name="' + path + 'text" placeholder="text" value="' + data.text + '" oninput="input(this)"></p>'
+				document.getElementById("menu").innerHTML += '<p><input name="' + path + 'href" placeholder="link" value="' + data.href + '" oninput="input(this)"><input name="' + path + 'text" placeholder="text" value="' + data.text + '" oninput="input(this)"><input type="button" class="toggle" onclick="toggleChildren('+index+','+(n?_:false)+',this)" value="Link"></p>'
 			}
 			return '<p id="' + data.id + '"><a href="' + data.href + '">' + cleanse(data.text) + '</a></p>'
 		}
@@ -126,13 +126,7 @@ function parse(jsonData) {
 			});
 		});
 
-		var newpageHTML = '<h2> Add page: </h2>\n<select id="newpage">\n' + Object.keys(types).map(type => {
-			if (type != "page") { // ignore default key
-				return '<optgroup label="' + identifiers[type] + '">\n' + types[type].map(page => "<option>" + page + "</option>").join('\n') + '\n</optgroup>'
-			} else {
-				return ''
-			}
-		}).join('\n') + '</select>\n<input type="button" class="new" onclick="newpage()" value="+">';
+		var newpageHTML = '<h2> Add page: </h2>\n<select id="newpage">\n' + Object.keys(types).map(type =>'<optgroup label="' + identifiers[type] + '">\n' + types[type].map(page => "<option>" + page + "</option>").join('\n') + '\n</optgroup>').join('\n') + '</select>\n<input type="button" class="new" onclick="newpage()" value="+">';
 		document.getElementById("pages").innerHTML += '<hr>\n'+newpageHTML;
 	}
 
@@ -207,10 +201,7 @@ function newpage() {
 }
 
 function deletepage(pageID) {
-	console.log(pageID)
-	console.log(settings.pages.map((x,i)=>i+': ' + x.style).join('\n'));
 	settings.pages.splice(pageID, 1);
-	console.log(settings.pages.map((x,i)=>i+': ' + x.style).join('\n'));
 
 	first = true;
 	parse(settings);
@@ -252,6 +243,46 @@ function addMenuItem(index, n) {
 			"text": "text",
 			"href": "#nowhere"
 		});
+	}
+	first = true;
+	parse(settings);
+}
+
+function deleteChild(index, index2, n) { // this is a legal abortion, I assure you.
+	if (n === false) {
+		settings.menu[index].children.splice(index2, 1);
+	} else {
+		settings.menu[n].children[index].children.splice(index2, 1);
+	}
+	first = true;
+	parse(settings);
+}
+
+function toggleChildren(index, n) {
+	if (n === false) {
+		settings.menu[index].hasChildren = !settings.menu[index].hasChildren;
+		this.value = settings.menu[index].hasChildren ? 'Submenu' : 'Link';
+		if (!settings.menu[index].href && !settings.menu[index].hasChildren) {
+			settings.menu[index].href = "#page"
+		}
+		if (!settings.menu[index].children && settings.menu[index].hasChildren) {
+			settings.menu[index].children = [{
+				"text": "text",
+				"href": "#page"
+			}]
+		}
+	} else {
+		settings.menu[n].children[index].hasChildren = !settings.menu[n].children[index].hasChildren;
+		this.value = settings.menu[n].children[index].hasChildren ? 'Submenu' : 'Link';
+		if (!settings.menu[n].children[index].href && !settings.menu[n].children[index].hasChildren) {
+			settings.menu[n].children[index].href = "#page"
+		}
+		if (!settings.menu[n].children[index].children && settings.menu[index].hasChildren) {
+			settings.menu[n].children[index].children = [{
+				"text": "text",
+				"href": "#page"
+			}]
+		}
 	}
 	first = true;
 	parse(settings);

@@ -42,6 +42,30 @@
 	border-radius: 2px;
 }
 
+.toggle {
+	background: #555;
+	color: #fff;
+	margin-right: 5px;
+	border-radius: 2px;
+}
+
+#menu p {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+#pages h4 {
+	margin-bottom: 0px;
+}
+
+#pages h4 + ul li, #pages h4 + ul {
+	margin-top: 0px;
+}
+
+#menu p:not([style]), #menu p[style~="0px;"] {
+	border-top: 1px solid black;
+}
+
 .pagetitle {
 	display: inline-block;
 }
